@@ -1,16 +1,13 @@
-﻿FROM ghcr.io/puppeteer/puppeteer:latest
+FROM node:20-slim
 
 WORKDIR /app
 
-# Instalar dependencias primero
 COPY package*.json ./
 RUN npm install
 
-# Copiar código
-COPY . .
+COPY scripts/ ./scripts/
+COPY templates/ ./templates/
 
-# Puerto del servidor Express
 EXPOSE 3000
 
-# Ejecutar API
 CMD ["node", "scripts/server.js"]
