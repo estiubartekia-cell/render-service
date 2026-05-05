@@ -1,0 +1,16 @@
+{
+  "name": "estiubartek-carousel-engine",
+  "version": "1.0.0",
+  "description": "Motor de generación de carruseles para redes sociales — estiubarTEK",
+  "author": "estiubarTEK",
+  "license": "ISC",
+  "type": "commonjs",
+  "scripts": {
+    "slide":    "node scripts/render.js",
+    "carousel": "node scripts/carousel.js",
+    "demo":     "node scripts/carousel.js --id demo"
+  },
+  "dependencies": {
+    "puppeteer": "^24.42.0"
+  }
+}
