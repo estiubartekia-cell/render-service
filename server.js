@@ -1,0 +1,35 @@
+const express = require("express");
+const { exec } = require("child_process");
+
+const app = express();
+app.use(express.json());
+
+app.use('/output', express.static('output'));
+
+app.post("/render", (req, res) => {
+    const { id, platform, slides } = req.body;
+
+    const data = JSON.stringify(slides);
+
+    const command = `node scripts/carousel.js --id "${id}" --platform "${platform}" --data '${data}'`;
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            return res.status(500).json({ error: stderr });
+        }
+
+        const baseUrl = "http://render-service:3000";
+        const matches = stdout.match(/\/app\/output\/[^\s"]+\.png/g) || [];
+
+        const urls = matches.map(p => p.replace('/app/', baseUrl + '/'));
+
+        res.json({
+            success: true,
+            urls
+        });
+    });
+});
+
+app.listen(3000, () => {
+    console.log("🚀 Render API running on port 3000");
+});
