@@ -11,7 +11,7 @@
 "use strict";
 
 const path = require("path");
-const fs   = require("fs");
+const fs = require("fs");
 const { renderSlide } = require("./render");
 
 const OUTPUT_DIR = path.join(__dirname, "../output");
@@ -28,8 +28,8 @@ const OUTPUT_DIR = path.join(__dirname, "../output");
  */
 async function renderCarousel(slides = [], options = {}) {
   const {
-    platform    = "instagram",
-    carouselId  = `carousel-${Date.now()}`,
+    platform = "instagram",
+    carouselId = `carousel-${Date.now()}`,
     templatePath,
   } = options;
 
@@ -50,8 +50,10 @@ async function renderCarousel(slides = [], options = {}) {
     results.push(outputPath);
   }
 
-  console.log(`\n🎠  Carrusel completo: ${carouselDir}`);
-  console.log(`📦  ${results.length} slides generados\n`);
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`\n🎠  Carrusel completo: ${carouselDir}`);
+    console.log(`📦  ${results.length} slides generados\n`);
+  }
 
   // Salida JSON para n8n (stdout)
   console.log(JSON.stringify({ carouselDir, slides: results }));
@@ -74,45 +76,45 @@ if (require.main === module) {
       // Carrusel de demo — 5 slides alineados a estiubarTEK
       slides = [
         {
-          eyebrow:  "Automatización IA",
-          title:    "¿Tu negocio trabaja mientras tú duermes?",
+          eyebrow: "Automatización IA",
+          title: "¿Tu negocio trabaja mientras tú duermes?",
           subtitle: "Los agentes de IA de <strong>estiubarTEK</strong> gestionan citas, leads y propuestas — 24/7, sin nómina.",
-          stat_1:   "24/7 sin pausas",
-          stat_2:   "ROI desde el día 1",
+          stat_1: "24/7 sin pausas",
+          stat_2: "ROI desde el día 1",
         },
         {
-          eyebrow:  "El problema",
-          title:    "Pierdes oportunidades cada día",
+          eyebrow: "El problema",
+          title: "Pierdes oportunidades cada día",
           subtitle: "Cada lead que no contestas a tiempo es una venta que se va a la competencia. La velocidad lo es todo.",
-          stat_1:   "+40% leads perdidos",
-          stat_2:   "Costo oportunidad real",
+          stat_1: "+40% leads perdidos",
+          stat_2: "Costo oportunidad real",
         },
         {
-          eyebrow:  "La solución",
-          title:    "Recepción inteligente 24/7",
+          eyebrow: "La solución",
+          title: "Recepción inteligente 24/7",
           subtitle: "Chatbots con RAG que califican prospectos con tono humano — sin perder contexto ni calidad de atención.",
-          stat_1:   "RAG + LLM nativo",
-          stat_2:   "Zero código para ti",
+          stat_1: "RAG + LLM nativo",
+          stat_2: "Zero código para ti",
         },
         {
-          eyebrow:  "Cómo funciona",
-          title:    "De lead a propuesta en 5 minutos",
+          eyebrow: "Cómo funciona",
+          title: "De lead a propuesta en 5 minutos",
           subtitle: "El agente recibe, califica y genera la propuesta en PDF automáticamente tras el diagnóstico inicial.",
-          stat_1:   "5 min vs. 2 días",
-          stat_2:   "Cierre profesional",
+          stat_1: "5 min vs. 2 días",
+          stat_2: "Cierre profesional",
         },
         {
-          eyebrow:  "Siguiente paso",
-          title:    "Diagnóstico gratuito para tu negocio",
+          eyebrow: "Siguiente paso",
+          title: "Diagnóstico gratuito para tu negocio",
           subtitle: "Analizamos tu operación y te mostramos exactamente qué automatizar primero para mayor impacto.",
-          stat_1:   "estiubartek.com",
-          stat_2:   "Agenda hoy",
+          stat_1: "estiubartek.com",
+          stat_2: "Agenda hoy",
         },
       ];
     }
 
-    const platform   = argv[argv.indexOf("--platform") + 1] || "instagram";
-    const carouselId = argv[argv.indexOf("--id") + 1]       || `demo-${Date.now()}`;
+    const platform = argv[argv.indexOf("--platform") + 1] || "instagram";
+    const carouselId = argv[argv.indexOf("--id") + 1] || `demo-${Date.now()}`;
 
     await renderCarousel(slides, { platform, carouselId });
   })();
