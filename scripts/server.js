@@ -18,9 +18,13 @@ app.post("/render", (req, res) => {
             return res.status(500).json({ error: stderr });
         }
 
+        const baseUrl = "http://render-service:3000";
+        const matches = stdout.match(/\/app\/output\/[^\s]+\.png/g) || [];
+        const urls = matches.map(p => p.replace('/app/', baseUrl + '/'));
+
         res.json({
             success: true,
-            output: stdout
+            urls
         });
     });
 });
