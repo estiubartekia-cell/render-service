@@ -28,12 +28,13 @@ const puppeteer = require("puppeteer");
 const TEMPLATE_PATH = path.join(__dirname, "../templates/slide-template.html");
 const OUTPUT_DIR    = path.join(__dirname, "../output");
 
-// ── Ruta al logo (relativa al proyecto, no al tmpdir) ─────────
-// Cuando el HTML temporal se guarda en OS tmpdir, los src relativos
-// como '../../assets/img/...' se rompen. Solución: inyectar base64.
+// ── Ruta al logo (dentro del microservicio automation/) ───────
+// El logo se copia en automation/assets/img/ para que el contenedor
+// Docker sea autónomo. render.js lo inyecta como base64 antes de
+// escribir el HTML temporal → Puppeteer no depende de rutas relativas.
 const LOGO_PATH = path.join(
   __dirname,
-  "../../assets/img/logo_estiubarTEK_t.png"
+  "../assets/img/logo_estiubarTEK_t.png"
 );
 
 // ── Dimensiones por plataforma ────────────────────────────────
