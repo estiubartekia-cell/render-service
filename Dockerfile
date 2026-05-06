@@ -35,6 +35,7 @@ RUN npm install
 
 COPY scripts/ ./scripts/
 COPY templates/ ./templates/
+COPY assets/ ./assets/
 
 EXPOSE 3000
 
