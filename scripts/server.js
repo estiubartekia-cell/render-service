@@ -7,11 +7,11 @@ app.use(express.json());
 app.use('/output', express.static('output'));
 
 app.post("/render", (req, res) => {
-    const { id, platform, slides } = req.body;
+    const { id, platform, slides, template = "dark" } = req.body;
 
     const data = JSON.stringify(slides);
 
-    const command = `node scripts/carousel.js --id "${id}" --platform "${platform}" --data '${data}'`;
+    const command = `node scripts/carousel.js --id "${id}" --platform "${platform}" --template "${template}" --data '${data}'`;
 
     exec(command, (error, stdout, stderr) => {
         if (error) {

@@ -113,10 +113,18 @@ if (require.main === module) {
       ];
     }
 
-    const platform = argv[argv.indexOf("--platform") + 1] || "instagram";
-    const carouselId = argv[argv.indexOf("--id") + 1] || `demo-${Date.now()}`;
+    const platform   = argv[argv.indexOf("--platform") + 1]  || "instagram";
+    const carouselId  = argv[argv.indexOf("--id") + 1]        || `demo-${Date.now()}`;
+    const template    = argv[argv.indexOf("--template") + 1]  || "dark";
 
-    await renderCarousel(slides, { platform, carouselId });
+    // Mapa de templates disponibles — agregar nuevas variantes aquí
+    const TEMPLATES = {
+      dark:  path.join(__dirname, "../templates/slide-template.html"),
+      light: path.join(__dirname, "../templates/slide-template-light.html"),
+    };
+    const templatePath = TEMPLATES[template] ?? TEMPLATES.dark;
+
+    await renderCarousel(slides, { platform, carouselId, templatePath });
   })();
 }
 
